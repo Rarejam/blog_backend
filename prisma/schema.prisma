@@ -26,17 +26,16 @@ comments Comment[]
 model User {
 id Int @id @default(autoincrement())
 username String
-email String
+email String @unique
 password String
-author_password String? 
 date DateTime @default(now())
-// comments Comment[]
+comments Comment[]
 }
 
 model Comment {
 id Int @id @default(autoincrement())
-// authorId Int 
-// comment_author User @relation(fields: [authorId],references: [id])
+authorId Int 
+comment_author User @relation(fields: [authorId],references: [id])
 blogId Int
 blog Blog @relation(fields: [blogId], references: [id])
 comment String

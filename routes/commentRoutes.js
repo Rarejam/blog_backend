@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const express = require("express");
 const commentRoute = express.Router();
 
-commentRoute.post("/", async (req, res) => {
+commentRoute.post("/", async (UT482I4Jreq, res) => {
   try {
     const { comment, blogId } = req.body;
 

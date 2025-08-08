@@ -29,11 +29,5 @@ article String
 date TimeStamp
 )
 
-model comment (
-id @default(autoincrement())
-authorId int 
-comment_author User @relation(fields: [authorId],reference: [id])
-comment String
-date TimeStamp
-)
+
 
