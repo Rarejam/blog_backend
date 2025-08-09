@@ -15,7 +15,7 @@ const callBlog = async () => {
     await prisma.comment.deleteMany(); // delete all comments first
     await prisma.blog.deleteMany(); // now safe to delete blogs
 
-    // const deleteBlog = await prisma.blog.deleteMany();
+    const deleteBlog = await prisma.blog.deleteMany();
     // 2. Create a blog post
     // const blog = await prisma.blog.create({
     //   data: {

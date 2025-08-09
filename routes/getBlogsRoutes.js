@@ -10,7 +10,7 @@ getBlogRoute.get("/", async (req, res) => {
   try {
     const bloglist = await prisma.blog.findMany();
     if (!bloglist) {
-      res.status(500).send("server err");
+      return res.status(500).send("server err");
     }
     res.json(bloglist);
   } catch (err) {
@@ -18,9 +18,9 @@ getBlogRoute.get("/", async (req, res) => {
   }
 });
 
-getBlogRoute.post("/", verifyJWT, postBlogController);
+getBlogRoute.post("/", postBlogController);
 
-getBlogRoute.get("/:id", verifyJWT, async (req, res) => {
+getBlogRoute.get("/:id", async (req, res) => {
   const id = req.params.id;
   const eachBlog = await prisma.blog.findUnique({
     where: {
@@ -42,7 +42,7 @@ getBlogRoute.get("/:id", verifyJWT, async (req, res) => {
   });
 });
 
-getBlogRoute.put("/:id", verifyJWT, async (req, res) => {
+getBlogRoute.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { image, title, author, article, isPublished } = req.body;

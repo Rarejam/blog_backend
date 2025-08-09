@@ -18,6 +18,7 @@ const verifyJWT = require("./verifyJwt");
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/public", express.static("public"));
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
@@ -28,9 +29,9 @@ app.use("/", getBlogRoute);
 
 app.use("/comments", verifyJWT, commentRoute);
 
-app.use("/delete", verifyJWT, deleteRoute);
+app.use("/delete", deleteRoute);
 
-app.use("/author", verifyJWT, authorRoute);
+app.use("/author", authorRoute);
 
 app.use("/signup", signupRoute);
 
