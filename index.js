@@ -25,17 +25,17 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", getBlogRoute);
+app.use("/api", getBlogRoute);
 
-app.use("/comments", verifyJWT, commentRoute);
+app.use("/api/comments", verifyJWT, commentRoute);
 
-app.use("/delete", deleteRoute);
+app.use("/api/delete", deleteRoute);
 
-app.use("/author", authorRoute);
+app.use("/api/author", authorRoute);
 
-app.use("/signup", signupRoute);
+app.use("/api/signup", signupRoute);
 
-app.use("/login", loginRoute);
+app.use("/api/login", loginRoute);
 
 const PORT = process.env.PORT;
 app.listen(PORT, (req, res) => {
