@@ -29,9 +29,6 @@ const signupController = async (req, res) => {
           password: hashedPassword,
         },
       });
-      //   await prisma.user.deleteMany();
-      //   const users = await prisma.user.findMany();
-      //   console.log(users);
       return res.status(201).json({ message: "authentication success" });
     }
   } catch (err) {

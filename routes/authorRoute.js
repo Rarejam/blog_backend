@@ -5,7 +5,9 @@ require("dotenv").config();
 const express = require("express");
 const authorRoute = express.Router();
 
-authorRoute.post("/", (req, res) => {
+const verifyJWT = require("../verifyJwt");
+
+authorRoute.post("/", verifyJWT, (req, res) => {
   try {
     const { author_password } = req.body;
     const correctPassword = process.env.AUTHOR_PASSWORD;

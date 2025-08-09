@@ -5,7 +5,7 @@ const commentController = async (req, res) => {
     const comment = req.body.user_comment;
     const blogId = req.body.blogId;
 
-    if (!user_comment || !blogId) {
+    if (!comment || !blogId) {
       return res.status(400).json({ error: "Missing comment " });
     }
     const newComment = await prisma.comment.create({
@@ -16,9 +16,10 @@ const commentController = async (req, res) => {
       },
     });
 
-    res.status(201).json(newComment);
+    return res.status(201).json(newComment);
   } catch (err) {
-    res.status(500).send(err);
+    console.error("Error creating comment:", err);
+    res.status(500).json({ error: "Server error" });
   }
 };
 module.exports = commentController;

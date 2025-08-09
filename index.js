@@ -9,6 +9,8 @@ const commentRoute = require("./routes/commentRoutes");
 const deleteRoute = require("./routes/deleteBlog");
 const authorRoute = require("./routes/authorRoute");
 const signupRoute = require("./routes/signupRoute");
+const loginRoute = require("./routes/loginRoute");
+const verifyJWT = require("./verifyJwt");
 // app.use(cors({
 //   origin: "http://localhost:5173"
 // }));
@@ -24,13 +26,15 @@ app.use((req, res, next) => {
 
 app.use("/", getBlogRoute);
 
-app.use("/comments", commentRoute);
+app.use("/comments", verifyJWT, commentRoute);
 
-app.use("/delete", deleteRoute);
+app.use("/delete", verifyJWT, deleteRoute);
 
-app.use("/author", authorRoute);
+app.use("/author", verifyJWT, authorRoute);
 
 app.use("/signup", signupRoute);
+
+app.use("/login", loginRoute);
 
 const PORT = process.env.PORT;
 app.listen(PORT, (req, res) => {

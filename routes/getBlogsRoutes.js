@@ -3,7 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const express = require("express");
 const getBlogRoute = express.Router();
-const postCommentsController = require("../controllers/commentController");
+const verifyJWT = require("../verifyJwt");
 // const commentRoute = require("./commentRoutes");
 
 getBlogRoute.get("/", async (req, res) => {
@@ -18,9 +18,9 @@ getBlogRoute.get("/", async (req, res) => {
   }
 });
 
-getBlogRoute.post("/", postBlogController);
+getBlogRoute.post("/", verifyJWT, postBlogController);
 
-getBlogRoute.get("/:id", async (req, res) => {
+getBlogRoute.get("/:id", verifyJWT, async (req, res) => {
   const id = req.params.id;
   const eachBlog = await prisma.blog.findUnique({
     where: {
@@ -35,13 +35,14 @@ getBlogRoute.get("/:id", async (req, res) => {
   if (!eachBlog) {
     return res.status(500).send("server err");
   }
+
   res.json({
     blog: eachBlog,
     comments: comments,
   });
 });
 
-getBlogRoute.put("/:id", async (req, res) => {
+getBlogRoute.put("/:id", verifyJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const { image, title, author, article, isPublished } = req.body;

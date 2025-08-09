@@ -3,13 +3,11 @@ const prisma = new PrismaClient();
 // const commentController = require("../controllers/commentController");
 const express = require("express");
 const commentRoute = express.Router();
+const verifyJWT = require("../verifyJwt");
 
-commentRoute.post("/", async (UT482I4Jreq, res) => {
+commentRoute.post("/", verifyJWT, async (req, res) => {
   try {
     const { comment, blogId } = req.body;
-
-    console.log("📥 Incoming comment:", req.body); //
-
     if (!comment || !blogId) {
       return res.status(400).json({ error: "Missing comment " });
     }
@@ -17,7 +15,10 @@ commentRoute.post("/", async (UT482I4Jreq, res) => {
       data: {
         comment: comment,
         blogId: parseInt(blogId),
+        authorId: parseInt(req.user.id),
         date: new Date(),
+        //store the username gotten from the payload in the comment usernmae field
+        username: req.user.username,
       },
     });
 
