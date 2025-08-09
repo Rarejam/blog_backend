@@ -22,6 +22,11 @@ getBlogRoute.post("/", postBlogController);
 
 getBlogRoute.get("/:id", async (req, res) => {
   const id = req.params.id;
+
+  if (isNaN(id)) {
+    return res.status(400).send("Invalid blog id");
+  }
+
   const eachBlog = await prisma.blog.findUnique({
     where: {
       id: parseInt(id),
@@ -45,6 +50,11 @@ getBlogRoute.get("/:id", async (req, res) => {
 getBlogRoute.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (isNaN(id)) {
+      return res.status(400).send("Invalid blog id");
+    }
+
     const { image, title, author, article, isPublished } = req.body;
     const updatedBlog = await prisma.blog.update({
       where: {
